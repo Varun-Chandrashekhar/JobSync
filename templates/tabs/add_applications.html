@@ -1,0 +1,11 @@
+<h2>Add Applications</h2>
+<form method="post" id="add-applications-form">
+    {% csrf_token %}
+    <label for="id_companies">Select companies:</label>
+    <select name="companies" id="id_companies" multiple>
+        {% for company in companies %}
+            <option value="{{ company }}">{{ company }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" id="add-applications-btn">Add Applications</button>
+</form>

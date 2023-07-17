@@ -1,0 +1,41 @@
+<h2>Common App</h2>
+<form method="post" id="common-app-form">
+    {% csrf_token %}
+    <label for="id_first_name">First Name:</label>
+    <input type="text" name="first_name" id="id_first_name" value="{{ request.session.first_name }}">
+    <br>
+    <label for="id_last_name">Last Name:</label>
+    <input type="text" name="last_name" id="id_last_name" value="{{ request.session.last_name }}">
+    <br>
+    <label for="id_preferred_name">Preferred Name:</label>
+    <input type="text" name="preferred_name" id="id_preferred_name" value="{{ request.session.preferred_name }}">
+    <br>
+    <button type="button" id="save-common-app-btn">Save</button>
+</form>
+
+<script>
+    const saveCommonAppBtn = document.getElementById('save-common-app-btn');
+    saveCommonAppBtn.addEventListener('click', () => {
+        const firstNameInput = document.getElementById('id_first_name');
+        const lastNameInput = document.getElementById('id_last_name');
+        const preferredNameInput = document.getElementById('id_preferred_name');
+
+        // Save the form data to the session
+        const formData = {
+            'first_name': firstNameInput.value,
+            'last_name': lastNameInput.value,
+            'preferred_name': preferredNameInput.value
+        };
+
+        // Update the session values
+        Object.keys(formData).forEach(key => {
+            request.session[key] = formData[key];
+        });
+
+        // Do something with the form data (e.g., send it to the server)
+        console.log(formData);
+
+        // Provide feedback to the user
+        alert('Common App saved successfully.');
+    });
+</script>

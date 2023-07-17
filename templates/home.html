@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Welcome to JobSyncV4</h2>
+    {% if user.is_authenticated %}
+        <a href="{% url 'application' %}">Go to Application Page</a>
+    {% else %}
+        <a href="{% url 'login' %}">Log In</a>
+        <a href="{% url 'signup' %}">Create Your Account</a>
+    {% endif %}
+{% endblock %}

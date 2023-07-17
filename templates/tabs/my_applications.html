@@ -1,0 +1,9 @@
+<h2>My Applications</h2>
+<ul id="my-applications-list">
+    {% for company in selected_companies %}
+        <li>{{ company }}</li>
+    {% endfor %}
+</ul>
+{% if selected_companies %}
+    <p>No applications yet.</p>
+{% endif %}

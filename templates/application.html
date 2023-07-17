@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="navigation-bar">
+        <ul>
+            <li><a href="#my-applications" class="tab-link active">My Applications</a></li>
+            <li><a href="#add-applications" class="tab-link">Add Applications</a></li>
+            <li><a href="#common-app" class="tab-link">Common App</a></li>
+        </ul>
+    </div>
+
+    <div class="section" id="my-applications">
+        {% include 'tabs/my_applications.html' %}
+    </div>
+
+    <div class="section" id="add-applications">
+        {% include 'tabs/add_applications.html' %}
+    </div>
+
+    <div class="section" id="common-app">
+        {% include 'tabs/common_app.html' %}
+    </div>
+
+    <script>
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.navigation-bar a');
+        const addApplicationsForm = document.getElementById('add-applications-form');
+        const addApplicationsBtn = document.getElementById('add-applications-btn');
+        const myApplicationsList = document.getElementById('my-applications-list');
+        const commonAppForm = document.getElementById('common-app-form');
+
+        addApplicationsForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const companiesSelect = document.getElementById('id_companies');
+            const selectedOptions = [...companiesSelect.options].filter((option) => option.selected);
+            const selectedCompanies = selectedOptions.map((option) => option.value);
+
+            if (selectedCompanies.length > 0) {
+                selectedCompanies.forEach((company) => {
+                    const li = document.createElement('li');
+                    li.textContent = company;
+                    myApplicationsList.appendChild(li);
+                });
+
+                alert('Company list was updated');
+                companiesSelect.selectedIndex = -1;
+            } else {
+                alert('Please select at least one company.');
+            }
+        });
+
+        commonAppForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const firstName = document.getElementById('id_first_name').value;
+            const lastName = document.getElementById('id_last_name').value;
+            const preferredName = document.getElementById('id_preferred_name').value;
+
+            // Do something with the form data
+            console.log(firstName, lastName, preferredName);
+
+            // Clear the form
+            commonAppForm.reset();
+            alert('Common App submitted successfully.');
+        });
+
+        navLinks.forEach((link) => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                sections.forEach((section) => {
+                    section.style.display = section.id === targetId ? 'block' : 'none';
+                });
+                navLinks.forEach((navLink) => {
+                    navLink.classList.remove('active');
+                });
+                link.classList.add('active');
+            });
+        });
+
+        // Set the "My Applications" tab as the default active tab
+        document.addEventListener('DOMContentLoaded', () => {
+            const myApplicationsTab = document.querySelector('.tab-link[href="#my-applications"]');
+            myApplicationsTab.classList.add('active');
+            document.getElementById('add-applications').style.display = 'none';
+            document.getElementById('common-app').style.display = 'none';
+        });
+    </script>
+{% endblock %}
