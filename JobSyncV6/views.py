@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
+# ...
+
 def home(request):
     return render(request, 'home.html')
 
@@ -24,7 +26,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('application')  # Redirect to the application page
+                return redirect('application')  # Redirect to the application page after login
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
@@ -33,29 +35,29 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-
 COMPANIES = [
-'Microsoft',
-'Google',
-'Amazon',
-'Apple',
-'Facebook',
-'IBM',
-'Oracle',
-'Intel',
-'Cisco Systems',
-'SAP',
-'Adobe Systems',
-'Salesforce',
-'VMware',
-'Tencent',
-'Baidu',
-'Netflix',
-'Twitter',
-'Uber',
-'Airbnb',
-'Tesla'
+    'Microsoft',
+    'Google',
+    'Amazon',
+    'Apple',
+    'Facebook',
+    'IBM',
+    'Oracle',
+    'Intel',
+    'Cisco Systems',
+    'SAP',
+    'Adobe Systems',
+    'Salesforce',
+    'VMware',
+    'Tencent',
+    'Baidu',
+    'Netflix',
+    'Twitter',
+    'Uber',
+    'Airbnb',
+    'Tesla'
 ]
+
 def application(request):
     if request.method == 'POST':
         selected_companies = request.POST.getlist('companies')
@@ -70,3 +72,6 @@ def application(request):
         'selected_companies': selected_companies,
     }
     return render(request, 'application.html', context)
+
+def profile(request):
+    return render(request, 'profile.html')
